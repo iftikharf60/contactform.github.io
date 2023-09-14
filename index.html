@@ -1,0 +1,77 @@
+<html>
+
+<head>
+  <script>
+    function generateCaptcha() {
+      var cap = "0123456789";
+      var captcha = "";
+      for (var i = 0; i < 4; i++) {
+        captcha += cap.charAt(Math.floor(Math.random() * cap.length));
+      }
+      document.getElementById("captchaText").textContent = captcha;
+      document.getElementById("captchaInput").value = "";
+    }
+
+    function validateForm() {
+      var userInput = document.getElementById("captchaInput").value;
+      var captcha = document.getElementById("captchaText").textContent;
+      if (userInput === captcha) {
+        return true; // Proceed with form submission
+      } else {
+        alert("Invalid CAPTCHA. Please try again.");
+        generateCaptcha();
+        return false; // Prevent form submission
+      }
+    }
+  </script>
+  <style>
+    .captcha-input {
+      width: auto;
+      margin: 10px 0;
+      padding: 8px 8px;
+      background: gray;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .captcha-input::placeholder {
+      color: white;
+      letter-spacing: 1px;
+    }
+    button,input[type="submit"]{
+      border: none;
+      outline: none;
+      background: blue;
+      color: white;
+      border-radius: 4px;
+      padding: 5px 10px;
+      font-weight: bold;
+      
+    }
+  </style>
+</head>
+
+<body onload="generateCaptcha();">
+    <h1>PHP Working Contact Form with CAPTCHA Validation!</h1>
+    <form action="form.php" method="post" onsubmit="return validateForm();">
+<!--       <label for="name">Name:</label> -->
+      <input type="text" id="name" name="name" required placeholder="Name"><br><br>
+
+<!--       <label for="contact">Contact:</label> -->
+      <input type="text" id="contact" name="contact" required placeholder="Contact"><br><br>
+
+<!--       <label for="email">Email:</label> -->
+      <input type="email" id="email" name="email" required placeholder="Mail ID"><br><br>
+
+      <label for="captcha">CAPTCHA:</label>
+      <span id="captchaText" style="font-weight: bold;"></span>
+      <button type="button" id="refreshCaptcha" onclick="generateCaptcha();">Refresh</button><br>
+      <input type="text" id="captchaInput" name="captchaInput" required placeholder="Enter Captcha!" class="captcha-input"><br><br>
+
+      <input type="submit" value="Submit">
+    </form>
+</body>
+
+</html>
